@@ -14,7 +14,7 @@ namespace MCCSampleSenderApplication
     public class CommentServerClient
     {
         private ClientWebSocket client;
-
+        private bool exit;
         public CommentServerClient()
         {
             client = new ClientWebSocket();
@@ -24,7 +24,7 @@ namespace MCCSampleSenderApplication
         {
             Task.Run(async () =>
             {
-                while (true)
+                while (!exit)
                 {
                     if (client.State == WebSocketState.None || client.State == WebSocketState.Closed || client.State == WebSocketState.Aborted)
                     {
@@ -67,6 +67,18 @@ namespace MCCSampleSenderApplication
 
                 client.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
             }
+        }
+
+        public void Close()
+        {
+            exit = true;
+            if (client.State == WebSocketState.Open)
+            {
+                client.CloseAsync(WebSocketCloseStatus.NormalClosure, "OK", CancellationToken.None);
+            }
+
+            client.Abort();
+            client.Dispose();
         }
     }
 }

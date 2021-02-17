@@ -102,7 +102,8 @@ namespace MCCSampleSenderApplication
             this.Controls.Add(this.Button_Send);
             this.Controls.Add(this.label1);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "サンプル送信プログラム";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -29,5 +29,13 @@ namespace MCCSampleSenderApplication
 
             RichTextBox_Log.Text = $"{TextBox_Name.Text} : {TextBox_Comment.Text}\n{RichTextBox_Log.Text}";
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (client != null)
+            {
+                client.Close();
+            }
+        }
     }
 }
